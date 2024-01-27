@@ -1,0 +1,24 @@
+.crisisChecker {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .title {
+    margin-bottom: 2rem;
+  }
+  
+  .button {
+    font-size: 2rem;
+    padding: 0.5rem 3rem;
+    border-radius: 0.5rem;
+    background-color: #343a40;
+    border: none;
+    &:hover {
+      background-color: lighten($color: #343a40, $amount: 10%);
+    }
+  }
