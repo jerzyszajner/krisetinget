@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import styles from './CrisisChecker.module.scss';
 
@@ -9,12 +9,11 @@ const CrisisChecker = () => {
     const handleMouseLeave = () => setButtonText('Sjekk!');
 
     const checkForCrisis = () => {
-
         window.open('https://e24.no/naeringsliv/i/gEo909/fare-for-potetgull-krise-i-norge-tiltak-fra-myndighetene', '_blank');
     };
 
     return (
-        <Container fluid className={styles.crisisChecker}>
+        <Container fluid className={`${styles.crisisChecker} d-flex justify-content-center align-items-center`}>
             <Row className="justify-content-md-center">
                 <Col md={12} className="text-center">
                     <h1 className={styles.title}>Er det krise i Norge nå?</h1>

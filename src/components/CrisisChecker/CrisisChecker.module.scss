@@ -1,15 +1,12 @@
 .crisisChecker {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background-color: #000;
-    color: #fff;
+    color: #ffffff;
 }
 
 .title {
-    margin-bottom: 2rem;
+    margin-bottom: 3.5rem;
+    font-size: 3.5rem;
 }
 
 .button {
