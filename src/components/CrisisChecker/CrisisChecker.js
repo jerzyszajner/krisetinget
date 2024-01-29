@@ -40,16 +40,18 @@ const CrisisChecker = () => {
 
     const renderSearchResults = () => {
         if (!searchResults) return null;
+
+        const filteredResults = searchResults.webPages?.value.filter((page, index) =>
+            searchResults.images?.value[index]
+        );
+
         return (
             <div className={styles.searchResultsContainer}>
-                {searchResults.webPages?.value.map((page, index) => (
+                {filteredResults.map((page, index) => (
                     <a key={index} href={page.url} target="_blank" rel="noopener noreferrer" className={styles.fullWidthLink}>
-                        {searchResults.images?.value[index] && (
-                            <img src={searchResults.images.value[index].thumbnailUrl} alt="" className={styles.resultImage} />
-                        )}
+                        <img src={searchResults.images.value[index].thumbnailUrl} alt="" className={styles.resultImage} />
                         <div className={styles.caption}>{page.name}</div>
                     </a>
-
                 ))}
             </div>
         );
