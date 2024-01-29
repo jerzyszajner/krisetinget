@@ -6,14 +6,14 @@ const CrisisChecker = () => {
     const [buttonText, setButtonText] = useState('Sjekk!');
     const [searchResults, setSearchResults] = useState(null);
 
-    const handleMouseEnter = () => setButtonText('JA!');
-    const handleMouseLeave = () => setButtonText('Sjekk!');
-
     const checkForCrisis = () => {
+        if (searchResults) {
+            setButtonText('Oppdater');
+        }
+
         const apiKey = process.env.REACT_APP_BING_API_KEY;
         const searchPhrase = 'potetgull krise';
-
-        const apiUrl = `https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(searchPhrase)}`;
+        const apiUrl = `https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(searchPhrase)}&mkt=no-NO&safeSearch=Moderate&responseFilter=Webpages,Images`;
 
         const headers = {
             'Ocp-Apim-Subscription-Key': apiKey,
@@ -31,39 +31,45 @@ const CrisisChecker = () => {
             })
             .then((data) => {
                 setSearchResults(data);
-                console.log(data);
+                setButtonText('Oppdater');
             })
             .catch((error) => {
-                console.error('Wystąpił błąd:', error);
+                console.error('An error occurred:', error);
             });
     };
 
     const renderSearchResults = () => {
         if (!searchResults) return null;
-        return searchResults.webPages?.value.map((page, index) => (
-            <div key={index}>
-                <h3>{page.name}</h3>
-                <p>{page.snippet}</p>
-                <a href={page.url} target="_blank" rel="noopener noreferrer">Czytaj więcej</a>
+        return (
+            <div className={styles.searchResultsContainer}>
+                {searchResults.webPages?.value.map((page, index) => (
+                    <a key={index} href={page.url} target="_blank" rel="noopener noreferrer" className={styles.fullWidthLink}>
+                        {searchResults.images?.value[index] && (
+                            <img src={searchResults.images.value[index].thumbnailUrl} alt="" className={styles.resultImage} />
+                        )}
+                        <div className={styles.caption}>{page.name}</div>
+                    </a>
+
+                ))}
             </div>
-        ));
+        );
     };
 
     return (
-        <Container fluid className={`${styles.crisisChecker} d-flex justify-content-center align-items-center`}>
+        <Container fluid className={`${styles.crisisChecker} d-flex justify-content-center align-items-center`} style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/photo1.png)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
             <Row className="justify-content-md-center">
                 <Col md={12} className="text-center">
-                    <h1 className={styles.title}>Er det krise i Norge nå?</h1>
+                    <h1 className="text-center mb-5">Dagens krise i Norge</h1>
                     <Button
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
                         onClick={checkForCrisis}
                         size="lg"
                         className={styles.button}
                         variant="secondary">
                         {buttonText}
                     </Button>
-                    {renderSearchResults()}
+                    <div className="searchResultsContainer">
+                        {renderSearchResults()}
+                    </div>
                 </Col>
             </Row>
         </Container>

@@ -1,24 +1,98 @@
 .crisisChecker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    background-color: #000;
+    padding: 4rem;
+    background-color: #171515cd;
     color: #ffffff;
-}
 
-.title {
-    margin-bottom: 3.5rem;
-    font-size: 3.5rem;
+    @media (max-width: 768px) {
+        padding: 0px;
+    }
 }
 
 .button {
-    font-size: 2rem;
-    padding: 0.5rem 3rem;
+    font-size: 1.6rem;
+    padding: 1rem 1rem;
     border-radius: 0.5rem;
-    background-color: #343a40;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    background-color: #837e78b0;
     border: none;
-    transition: background-color 0.6s ease, color 0.6s ease;
-    width: 180px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    width: 160px;
+    color: #ffffff;
 
     &:hover {
-        background-color: lighten($color: #e00e34, $amount: 10%);
+        background-color: lighten($color: #ea4108c7, $amount: 10%);
     }
+}
+
+.searchResultsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    padding: 5rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.resultImage {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    opacity: 0.6;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.fullWidthLink:hover .caption {
+    opacity: 0;
+}
+
+.fullWidthLink:hover .resultImage {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+a {
+    text-decoration: none;
+    color: #ff0101;
+}
+
+h1 {
+    color: #ff5e00;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 800;
+    font-size: 80px;
+
+}
+
+h3 {
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-size: 40px;
+    text-align: center;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fullWidthLink {
+    position: relative;
+    display: block;
 }
