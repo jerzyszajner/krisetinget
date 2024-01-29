@@ -45,9 +45,11 @@ const CrisisChecker = () => {
             searchResults.images?.value[index]
         );
 
+        const limitedResults = filteredResults.slice(0, 9);
+
         return (
             <div className={styles.searchResultsContainer}>
-                {filteredResults.map((page, index) => (
+                {limitedResults.map((page, index) => (
                     <a key={index} href={page.url} target="_blank" rel="noopener noreferrer" className={styles.fullWidthLink}>
                         <img src={searchResults.images.value[index].thumbnailUrl} alt="" className={styles.resultImage} />
                         <div className={styles.caption}>{page.name}</div>
