@@ -1,0 +1,48 @@
+.crisisChecker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 4rem;
+    background-color: #171515cd;
+    color: #ffffff;
+
+    @media (max-width: 768px) {
+        padding: 0px;
+    }
+}
+
+.button {
+    font-size: 1.6rem;
+    padding: 1rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    background-color: #837e78b0;
+    border: none;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    width: 160px;
+    color: #ffffff;
+
+    &:hover {
+        background-color: lighten($color: #ea4108c7, $amount: 10%);
+    }
+}
+
+a {
+    text-decoration: none;
+    color: #ff0101;
+}
+
+h1 {
+    color: #ff5e00;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 800;
+    font-size: 80px;
+
+}
+
+h3 {
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+}
