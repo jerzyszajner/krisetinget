@@ -1,62 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import useCrisisData from '../../hooks/useCrisisData';
+import RenderSearchResults from '../RenderSearchResults/RenderSearchResults';
 import styles from './CrisisChecker.module.scss';
 
 const CrisisChecker = () => {
+    const { data: searchResults, isLoading, error, fetchData } = useCrisisData();
     const [buttonText, setButtonText] = useState('Sjekk!');
-    const [searchResults, setSearchResults] = useState(null);
 
-    const checkForCrisis = () => {
+    useEffect(() => {
         if (searchResults) {
             setButtonText('Oppdater');
         }
+    }, [searchResults]);
 
-        const apiKey = process.env.REACT_APP_BING_API_KEY;
-        const searchPhrase = 'potetgull krise';
-        const apiUrl = `https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(searchPhrase)}&mkt=no-NO&safeSearch=Moderate&responseFilter=Webpages,Images`;
-
-        const headers = {
-            'Ocp-Apim-Subscription-Key': apiKey,
-        };
-
-        fetch(apiUrl, {
-            method: 'GET',
-            headers: headers
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setSearchResults(data);
-                setButtonText('Oppdater');
-            })
-            .catch((error) => {
-                console.error('An error occurred:', error);
-            });
-    };
-
-    const renderSearchResults = () => {
-        if (!searchResults) return null;
-
-        const filteredResults = searchResults.webPages?.value.filter((page, index) =>
-            searchResults.images?.value[index]
-        );
-
-        const limitedResults = filteredResults.slice(0, 9);
-
-        return (
-            <div className={styles.searchResultsContainer}>
-                {limitedResults.map((page, index) => (
-                    <a key={index} href={page.url} target="_blank" rel="noopener noreferrer" className={styles.fullWidthLink}>
-                        <img src={searchResults.images.value[index].thumbnailUrl} alt="" className={styles.resultImage} />
-                        <div className={styles.caption}>{page.name}</div>
-                    </a>
-                ))}
-            </div>
-        );
+    const checkForCrisis = () => {
+        fetchData('potetgull krise');
     };
 
     return (
@@ -68,11 +27,13 @@ const CrisisChecker = () => {
                         onClick={checkForCrisis}
                         size="lg"
                         className={styles.button}
-                        variant="secondary">
-                        {buttonText}
+                        variant="secondary"
+                        disabled={isLoading}>
+                        {isLoading ? 'Laster...' : buttonText}
                     </Button>
+                    {error && <div className="error">{error.message}</div>}
                     <div className="searchResultsContainer">
-                        {renderSearchResults()}
+                        <RenderSearchResults searchResults={searchResults} />
                     </div>
                 </Col>
             </Row>
